@@ -27,6 +27,8 @@ public class Controller {
             System.out.println("loading aircrafts...");
             datenmanagerAircraft = Persistence.loadAircraft();
 
+            Thread.sleep(1500);
+
             this.ausgabe();
 
             BufferedReader obj = new BufferedReader(new InputStreamReader(System.in));
