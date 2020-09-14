@@ -1,0 +1,22 @@
+eddm;48.354260;11.769865
+eddh;53.633673;9.998024
+
+lat/long
+
+
+//	geocalc 
+	Coordinate lat=new GPSCoordinate(41,.1212);
+//	Coordinate lng = new GPSCoordinate(11, .2323);
+//	Point point = new Point(lat, lng);
+//
+//	lat=new DegreeCoordinate(51.4613418);
+	lng=new DegreeCoordinate(-0.3035466);
+//	Point point2 = new Point(lat,
+//			lng);System.out.println("Distance is "+EarthCalc.getDistance(point2,point)/1000+" km");
+
+//	double dx = 71.5 * (g1.getLat() - g2.getLat());
+//	double dy = 111.3 * (g1.getLon() - g2.getLon());
+//        return Math.sqrt(dx * dx + dy * dy);
+
+//	String textInBold = "Java_Prof_Level";
+//System.out.print("\033[0;1m" + textInBold);

@@ -35,4 +35,7 @@ public class Persistence {
 
 		return ao;
 	}
+
+    public static DatenmanagerAirport loadAirport() {
+    }
 }
