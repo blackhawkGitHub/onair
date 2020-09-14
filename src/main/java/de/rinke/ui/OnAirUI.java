@@ -1,15 +1,8 @@
 package de.rinke.ui;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class OnAirUI extends JFrame {
 
@@ -17,6 +10,7 @@ public class OnAirUI extends JFrame {
 	private JTable table;
 	private JButton btnAircraft;
 	private JScrollPane scrollPane;
+	private JTextField tf_airport;
 
 	/**
 	 * Create the frame.
@@ -45,6 +39,10 @@ public class OnAirUI extends JFrame {
 		btnAircraft = new JButton("aircraft");
 		panel.add(btnAircraft);
 
+		tf_airport = new JTextField();
+		panel.add(tf_airport);
+		tf_airport.setColumns(10);
+
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -62,5 +60,9 @@ public class OnAirUI extends JFrame {
 
 	public JTable getTable() {
 		return table;
+	}
+
+	public JTextField getTf_airport() {
+		return tf_airport;
 	}
 }
