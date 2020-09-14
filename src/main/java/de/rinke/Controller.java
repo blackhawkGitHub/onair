@@ -1,24 +1,15 @@
 package de.rinke;
 
 import de.rinke.ao.AircraftAO;
-import de.rinke.ui.AircraftEditorController;
-import de.rinke.ui.AircraftEditorUI;
-import de.rinke.ui.OnAirUI;
 
-import javax.swing.*;
 import javax.xml.bind.JAXBException;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.UUID;
 
 public class Controller {
 
     public static DatenmanagerAircraft datenmanagerAircraft = new DatenmanagerAircraft();
-    private OnAirUI ui = new OnAirUI();
 
     public void init() {
 
@@ -26,13 +17,7 @@ public class Controller {
 
             datenmanagerAircraft = Persistence.loadAircraft();
 
-           umschluesseln();
-//
-//            this.updateTable();
-//            this.initListener();
-//            ui.setVisible(true);
-//
-//            return;
+            umschluesseln();
 
             boolean createAircraft = false;
             boolean editAircraft = false;
@@ -45,35 +30,33 @@ public class Controller {
             this.ausgabe();
 
             BufferedReader obj = new BufferedReader(new InputStreamReader(System.in));
-            String str="";
+            String str = "";
 
             System.out.println("Enter 'stop' to quit.");
             do {
-                if(deleteAircraft){
+                if (deleteAircraft) {
                     System.out.println("Bitte id eingeben");
-                    str = obj.readLine();
-                    int id = Integer.parseInt(str);
-                    AircraftAO ao= datenmanagerAircraft.getAO(str);
+                    str = getEingabe(obj, null);
+                    AircraftAO ao = datenmanagerAircraft.getAO(str);
                     System.out.println(ao);
                     datenmanagerAircraft.getAircraftListe().remove(ao);
                     Persistence.saveAircraft(datenmanagerAircraft);
-                    deleteAircraft=false;
+                    deleteAircraft = false;
                     ausgabe();
                 }
                 if (editAircraft) {
                     System.out.println("Bitte id eingeben");
-                    str = obj.readLine();
-                    int id = Integer.parseInt(str);
-                    AircraftAO ao= datenmanagerAircraft.getAO(str);
+                    str = getEingabe(obj, null);
+                    AircraftAO ao = datenmanagerAircraft.getAO(str);
                     System.out.println(ao);
                     eingabeAircraft(obj, ao);
                     Persistence.saveAircraft(datenmanagerAircraft);
-                    editAircraft=false;
+                    editAircraft = false;
                     this.ausgabe();
                 }
                 if (createAircraft) {
                     AircraftAO ao = new AircraftAO();
-                    ao.setId(UUID.randomUUID().toString());
+                    ao.setId(""+datenmanagerAircraft.getMaxIdAircraft());
                     System.out.println("create Aircraft");
                     eingabeAircraft(obj, ao);
                     datenmanagerAircraft.getAircraftListe().add(ao);
@@ -81,16 +64,16 @@ public class Controller {
                     createAircraft = false;
                     this.ausgabe();
                 } else {
-                    str = obj.readLine();
+                    str = getEingabe(obj, null);
                     System.err.println(str);
                     if (str.equalsIgnoreCase("ca")) {
                         createAircraft = true;
                     }
                     if (str.equalsIgnoreCase("ea")) {
-                        editAircraft= true;
+                        editAircraft = true;
                     }
                     if (str.equalsIgnoreCase("da")) {
-                        deleteAircraft= true;
+                        deleteAircraft = true;
                     }
                 }
             } while (!str.equals("stop"));
@@ -100,68 +83,54 @@ public class Controller {
 
     }
 
+    private String getEingabe(BufferedReader obj, String wert) throws IOException {
+        String str = obj.readLine();
+        if(str.equalsIgnoreCase("")){
+            str= wert;
+        }
+        if(str.equalsIgnoreCase("---")){
+            str= "";
+        }
+        System.err.println(str);
+        return str;
+    }
+
     private void umschluesseln() throws JAXBException {
-        boolean update=false;
-        int id=0;
+        boolean update = false;
+        int id = 0;
         for (AircraftAO current : datenmanagerAircraft.getAircraftListe()) {
             //if (current.getId().length() < 5) {
             if (current.getId().length() > 5) {
                 //current.setId(UUID.randomUUID().toString());
                 id++;
-                current.setId(""+id);
-                update=true;
+                current.setId("" + id);
+                update = true;
             }
         }
-        if(update){
+        if (update) {
             Persistence.saveAircraft(datenmanagerAircraft);
         }
     }
 
-    private void updateTable() {
-        this.ui.getTable().setDefaultRenderer(Object.class, new TabRend());
-        TabModel model = new TabModel(AircraftAO.class);
-        for (AircraftAO ao : datenmanagerAircraft.getAircraftListe()) {
-            model.add(ao);
-        }
-        this.ui.getTable().setModel(model);
-    }
-
-    private void initListener() {
-
-        this.ui.getTable().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount()==2) {
-                    JTable table = (JTable) e.getSource();
-                    int row = table.rowAtPoint(e.getPoint());
-                    int col = table.columnAtPoint(e.getPoint());
-                    AircraftAO ao = (AircraftAO) ((TabModel) table.getModel()).getValueAt(row);
-                    AircraftEditorController aec = new AircraftEditorController();
-                    aec.init(ao);
-                    updateTable();
-                }
-            }
-        });
-
-        this.ui.getBtnAircraft().addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AircraftEditorController aec = new AircraftEditorController();
-                aec.init(null);
-                updateTable();
-            }
-        });
-    }
-
     private void eingabeAircraft(BufferedReader obj, AircraftAO ao) throws IOException {
         String str;
+        System.out.println("ID");
+        str = getEingabe(obj,ao.getId2());
+        ao.setId2(str);
         System.out.println("Name");
-        str = obj.readLine();
-        System.err.println(str);
+         str = getEingabe(obj,ao.getName());
         ao.setName(str);
+
+        System.out.println("Ort");
+        str = getEingabe(obj,ao.getOrt());
+        ao.setOrt(str);
+
+        System.out.println("Status");
+        str = getEingabe(obj,ao.getStatus());
+        ao.setStatus(str);
+
         System.out.println("Pilot");
-        str = obj.readLine();
-        System.err.println(str);
+         str = getEingabe(obj,ao.getPilot());
         ao.setPilot(str);
         //return str;
     }

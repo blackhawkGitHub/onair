@@ -32,4 +32,15 @@ public class DatenmanagerAircraft implements Serializable {
         }
         return null;
     }
+
+    public int getMaxIdAircraft() {
+        int id = 0;
+        for (AircraftAO current:aircraftListe) {
+            if(Integer.parseInt(current.getId())>id){
+                id = Integer.parseInt(current.getId());
+            }
+        }
+        id++;
+        return id;
+    }
 }
