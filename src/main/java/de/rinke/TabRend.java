@@ -17,6 +17,17 @@ public class TabRend extends TableCellRendererRBC {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         this.setBackground(Color.WHITE);
         this.setForeground(Color.BLACK);
+
+        try {
+            if (column == 2 || column == 3) {
+                if ((double) value == 0.0) {
+                    this.setBackground(Color.yellow);
+                }
+            }
+        }catch (Exception e){
+
+        }
+
         return this;
     }
 }
