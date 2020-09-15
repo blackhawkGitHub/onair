@@ -1,196 +1,174 @@
 package de.rinke;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.UUID;
-
-import javax.swing.AbstractAction;
-import javax.swing.JTable;
-import javax.xml.bind.JAXBException;
-
+import com.peertopark.java.geocalc.*;
 import de.rinke.ao.AircraftAO;
+import de.rinke.ao.AirportAO;
 import de.rinke.ui.AircraftEditorController;
+import de.rinke.ui.AirportEditorController;
 import de.rinke.ui.OnAirUI;
+
+import javax.swing.*;
+import javax.xml.bind.JAXBException;
+import java.awt.event.*;
+import java.util.UUID;
 
 public class Controller {
 
-	public static DatenmanagerAircraft datenmanagerAircraft = new DatenmanagerAircraft();
-	private OnAirUI ui = new OnAirUI();
+    public static DatenmanagerAircraft datenmanagerAircraft = new DatenmanagerAircraft();
+    public static DatenmanagerAirport datenmanagerAirport = new DatenmanagerAirport();
+    private OnAirUI ui = new OnAirUI();
 
-//	geocalc Coordinate lat=new GPSCoordinate(41,.1212);
-//	Coordinate lng = new GPSCoordinate(11, .2323);
-//	Point point = new Point(lat, lng);
-//
-//	lat=new DegreeCoordinate(51.4613418);lng=new DegreeCoordinate(-0.3035466);
-//	Point point2 = new Point(lat,
-//			lng);System.out.println("Distance is "+EarthCalc.getDistance(point2,point)/1000+" km");
+    public void init() {
 
-//	double dx = 71.5 * (g1.getLat() - g2.getLat());
-//	double dy = 111.3 * (g1.getLon() - g2.getLon());
-//        return Math.sqrt(dx * dx + dy * dy);
+        try {
 
-//	String textInBold = "Java_Prof_Level";
-//System.out.print("\033[0;1m" + textInBold);
+            datenmanagerAircraft = Persistence.loadAircraft();
+            datenmanagerAirport = Persistence.loadAirport();
 
-	public void init() {
-
-		try {
-
-			datenmanagerAircraft = Persistence.loadAircraft();
-
-			umschluesseln();
+            umschluesseln();
 //
             this.updateTable();
             this.initListener();
+            ui.setSize(1300, 500);
             ui.setVisible(true);
-//
-            return;
 
-//			boolean createAircraft = false;
-//			boolean editAircraft = false;
-//			boolean deleteAircraft = false;
-//
-//			System.out.println("loading...");
-//			System.out.println("loading aircrafts...");
-//			datenmanagerAircraft = Persistence.loadAircraft();
-//
-//			this.ausgabe();
-//
-//			BufferedReader obj = new BufferedReader(new InputStreamReader(System.in));
-//			String str = "";
-//
-//			System.out.println("Enter 'stop' to quit.");
-//			do {
-//				if (deleteAircraft) {
-//					System.out.println("Bitte id eingeben");
-//					str = obj.readLine();
-//					int id = Integer.parseInt(str);
-//					AircraftAO ao = datenmanagerAircraft.getAO(str);
-//					System.out.println(ao);
-//					datenmanagerAircraft.getAircraftListe().remove(ao);
-//					Persistence.saveAircraft(datenmanagerAircraft);
-//					deleteAircraft = false;
-//					ausgabe();
-//				}
-//				if (editAircraft) {
-//					System.out.println("Bitte id eingeben");
-//					str = obj.readLine();
-//					int id = Integer.parseInt(str);
-//					AircraftAO ao = datenmanagerAircraft.getAO(str);
-//					System.out.println(ao);
-//					eingabeAircraft(obj, ao);
-//					Persistence.saveAircraft(datenmanagerAircraft);
-//					editAircraft = false;
-//					this.ausgabe();
-//				}
-//				if (createAircraft) {
-//					AircraftAO ao = new AircraftAO();
-//					ao.setId(UUID.randomUUID().toString());
-//					System.out.println("create Aircraft");
-//					eingabeAircraft(obj, ao);
-//					datenmanagerAircraft.getAircraftListe().add(ao);
-//					Persistence.saveAircraft(datenmanagerAircraft);
-//					createAircraft = false;
-//					this.ausgabe();
-//				} else {
-//					str = obj.readLine();
-//					System.err.println(str);
-//					if (str.equalsIgnoreCase("ca")) {
-//						createAircraft = true;
-//					}
-//					if (str.equalsIgnoreCase("ea")) {
-//						editAircraft = true;
-//					}
-//					if (str.equalsIgnoreCase("da")) {
-//						deleteAircraft = true;
-//					}
-//				}
-//			} while (!str.equals("stop"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	private void umschluesseln() throws JAXBException {
-		boolean update = false;
-		int id = 0;
-		for (AircraftAO current : datenmanagerAircraft.getAircraftListe()) {
-			// if (current.getId().length() < 5) {
-			if (current.getId().length() > 5) {
-				// current.setId(UUID.randomUUID().toString());
-				id++;
-				current.setId("" + id);
-				update = true;
-			}
-		}
-		if (update) {
-			Persistence.saveAircraft(datenmanagerAircraft);
-		}
-	}
+    private void umschluesseln() throws JAXBException {
+        boolean update = false;
+        for (AircraftAO current : datenmanagerAircraft.getAircraftListe()) {
+            if (current.getId().length() < 5) {
+                current.setId(UUID.randomUUID().toString());
+                update = true;
+            }
+        }
+        if (update) {
+            Persistence.saveAircraft(datenmanagerAircraft);
+        }
+        update = false;
+        for (AirportAO current : datenmanagerAirport.getAirportListe()) {
+            if (current.getId().length() < 5) {
+                current.setId(UUID.randomUUID().toString());
+                update = true;
+            }
+        }
+        if (update) {
+            Persistence.saveAirport(datenmanagerAirport);
+        }
+    }
 
-	private void updateTable() {
-		this.ui.getTable().setDefaultRenderer(Object.class, new TabRend());
-		TabModel model = new TabModel(AircraftAO.class);
-		for (AircraftAO ao : datenmanagerAircraft.getAircraftListe()) {
-			model.add(ao);
-		}
-		this.ui.getTable().setModel(model);
-	}
+    private void updateTable() {
+        this.ui.getTable().setDefaultRenderer(Object.class, new TabRend());
+        TabModel model = new TabModel(AircraftAO.class);
+        for (AircraftAO ao : datenmanagerAircraft.getAircraftListe()) {
+            model.add(ao);
+        }
+        this.ui.getTable().setModel(model);
+        ///
+        this.ui.getTable_airport().setDefaultRenderer(Object.class, new TabRend());
+        TabModel model2 = new TabModel(AirportAO.class);
+        for (AirportAO ao : datenmanagerAirport.getAirportListe()) {
+            model2.add(ao);
+        }
+        this.ui.getTable_airport().setModel(model2);
+    }
 
-	private void initListener() {
+    private void initListener() {
 
-		this.ui.getTable().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					JTable table = (JTable) e.getSource();
-					int row = table.rowAtPoint(e.getPoint());
-					int col = table.columnAtPoint(e.getPoint());
-					AircraftAO ao = (AircraftAO) ((TabModel) table.getModel()).getValueAt(row);
-					AircraftEditorController aec = new AircraftEditorController();
-					aec.init(ao);
-					updateTable();
-				}
-			}
-		});
+        this.ui.getTf_airport().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String eingabe = ((JTextField) e.getSource()).getText();
+                if (eingabe != null && eingabe.length() == 4) {
+                    Controller.berechnen(eingabe);
+                    updateTable();
+                }
+            }
+        });
 
-		this.ui.getBtnAircraft().addActionListener(new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AircraftEditorController aec = new AircraftEditorController();
-				aec.init(null);
-				updateTable();
-			}
-		});
-	}
+        this.ui.getTable_airport().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable table = (JTable) e.getSource();
+                    int row = table.rowAtPoint(e.getPoint());
+                    int col = table.columnAtPoint(e.getPoint());
+                    AirportAO ao = (AirportAO) ((TabModel) table.getModel()).getValueAt(row);
+                    AirportEditorController aec = new AirportEditorController();
+                    aec.init(ao);
+                    updateTable();
+                }
+            }
+        });
 
-	private void eingabeAircraft(BufferedReader obj, AircraftAO ao) throws IOException {
-		String str;
-		System.out.println("Name");
-		str = obj.readLine();
-		System.err.println(str);
-		ao.setName(str);
-		System.out.println("Pilot");
-		str = obj.readLine();
-		System.err.println(str);
-		ao.setPilot(str);
-		// return str;
-	}
+        this.ui.getTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable table = (JTable) e.getSource();
+                    int row = table.rowAtPoint(e.getPoint());
+                    int col = table.columnAtPoint(e.getPoint());
+                    AircraftAO ao = (AircraftAO) ((TabModel) table.getModel()).getValueAt(row);
+                    AircraftEditorController aec = new AircraftEditorController();
+                    aec.init(ao);
+                    updateTable();
+                }
+            }
+        });
 
-	private void ausgabe() throws IOException, InterruptedException {
+        this.ui.getBtnAirport().addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AirportEditorController aec = new AirportEditorController();
+                aec.init(null);
+                updateTable();
+            }
+        });
 
-		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        this.ui.getBtnAircraft().addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AircraftEditorController aec = new AircraftEditorController();
+                aec.init(null);
+                updateTable();
+            }
+        });
+    }
 
-		System.out.println("Aircraft");
-		System.out.println("--------");
-		for (AircraftAO ao : datenmanagerAircraft.getAircraftListe()) {
-			// System.out.println(ao.getId()+" "+ao.getName()+" "+ao.getPilot());
-			System.out.println(ao);
-		}
-	}
+    private static void berechnen(String name) {
+        AirportAO dest = datenmanagerAirport.getAO(name);
+        for (AircraftAO ao : datenmanagerAircraft.getAircraftListe()) {
+            ao.setEntfernung("");
+        }
+        if (dest != null) {
+            for (AircraftAO ao : datenmanagerAircraft.getAircraftListe()) {
+                String airport = ao.getOrt();
+                AirportAO airportAO = datenmanagerAirport.getAO(airport);
+                if (airportAO != null) {
+                    double entf = Controller.berechnen(dest, airportAO);
+                    ao.setEntfernung("" + entf);
+                }
+            }
+        }
+    }
+
+    private static double berechnen(AirportAO dest, AirportAO ao) {
+
+        Coordinate lat = new DegreeCoordinate(dest.getLat());
+        Coordinate lng = new DegreeCoordinate(dest.getLng());
+        Point point = new Point(lat, lng);
+
+        lat = new DegreeCoordinate(ao.getLat());
+        lng = new DegreeCoordinate(ao.getLng());
+        Point point2 = new Point(lat, lng);
+
+        double entf = EarthCalc.getDistance(point2, point) / 1000;
+
+        System.out.println("Distance is " + entf + " km");
+        return entf;
+    }
 }

@@ -26,6 +26,8 @@ public class AircraftEditorUI extends JDialog {
 	private JLabel lblNewLabel_3;
 	private JTextField tf_id2;
 	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JTextField tf_status;
 
 	/**
 	 * Create the frame.
@@ -38,9 +40,9 @@ public class AircraftEditorUI extends JDialog {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 0, 0, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		JLabel lblNewLabel = new JLabel("ID");
@@ -113,12 +115,29 @@ public class AircraftEditorUI extends JDialog {
 		contentPane.add(tf_ort, gbc_tf_ort);
 		tf_ort.setColumns(10);
 
+		lblNewLabel_5 = new JLabel("Status");
+		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_5.gridx = 0;
+		gbc_lblNewLabel_5.gridy = 4;
+		contentPane.add(lblNewLabel_5, gbc_lblNewLabel_5);
+
+		tf_status = new JTextField();
+		GridBagConstraints gbc_tf_status = new GridBagConstraints();
+		gbc_tf_status.insets = new Insets(0, 0, 5, 0);
+		gbc_tf_status.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tf_status.gridx = 1;
+		gbc_tf_status.gridy = 4;
+		contentPane.add(tf_status, gbc_tf_status);
+		tf_status.setColumns(10);
+
 		JLabel lblNewLabel_2 = new JLabel("Pilot");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 4;
+		gbc_lblNewLabel_2.gridy = 5;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
 		tf_pilot = new JTextField();
@@ -126,7 +145,7 @@ public class AircraftEditorUI extends JDialog {
 		gbc_tf_pilot.insets = new Insets(0, 0, 5, 0);
 		gbc_tf_pilot.fill = GridBagConstraints.HORIZONTAL;
 		gbc_tf_pilot.gridx = 1;
-		gbc_tf_pilot.gridy = 4;
+		gbc_tf_pilot.gridy = 5;
 		contentPane.add(tf_pilot, gbc_tf_pilot);
 		tf_pilot.setColumns(10);
 
@@ -135,7 +154,7 @@ public class AircraftEditorUI extends JDialog {
 		gbc_panel.gridwidth = 2;
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 5;
+		gbc_panel.gridy = 6;
 		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -172,5 +191,9 @@ public class AircraftEditorUI extends JDialog {
 
 	public JTextField getTf_id2() {
 		return tf_id2;
+	}
+
+	public JTextField getTf_status() {
+		return tf_status;
 	}
 }

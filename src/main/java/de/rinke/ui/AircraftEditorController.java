@@ -1,7 +1,6 @@
 package de.rinke.ui;
 
 import de.rinke.Controller;
-import de.rinke.DatenmanagerAircraft;
 import de.rinke.Persistence;
 import de.rinke.ao.AircraftAO;
 
@@ -23,6 +22,7 @@ public class AircraftEditorController {
             ui.getTf_id2().setText(ao.getId2());
             ui.getTf_namemodell().setText(ao.getName());
             ui.getTf_ort().setText(ao.getOrt());
+            ui.getTf_status().setText(ao.getStatus());
             ui.getTf_pilot().setText(ao.getPilot());
         }else{
             ui.getTf_id().setText(UUID.randomUUID().toString());
@@ -34,6 +34,7 @@ public class AircraftEditorController {
     }
 
     private void initListener() {
+
         ui.getBtnOK().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,6 +46,7 @@ public class AircraftEditorController {
                 ao.setId2(ui.getTf_id2().getText());
                 ao.setName(ui.getTf_namemodell().getText());
                 ao.setOrt(ui.getTf_ort().getText());
+                ao.setStatus(ui.getTf_status().getText());
                 ao.setPilot(ui.getTf_pilot().getText());
                 try {
                     Persistence.saveAircraft(Controller.datenmanagerAircraft);
