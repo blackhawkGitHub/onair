@@ -46,7 +46,7 @@ public class Persistence {
 		{
 			JAXBContext jaxbContext = JAXBContext.newInstance(DatenmanagerAirport.class);
 			Unmarshaller jaxbMarshaller = jaxbContext.createUnmarshaller();
-			if(!new File(pfad).exists()){
+			if(!new File(pfad_airport).exists()){
 				return new DatenmanagerAirport();
 			}
 			DatenmanagerAirport ao = (DatenmanagerAirport) jaxbMarshaller.unmarshal(new File(pfad_airport));

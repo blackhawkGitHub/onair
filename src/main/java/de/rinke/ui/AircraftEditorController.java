@@ -3,6 +3,7 @@ package de.rinke.ui;
 import de.rinke.Controller;
 import de.rinke.Persistence;
 import de.rinke.ao.AircraftAO;
+import de.rinke.ao.AirportAO;
 
 import javax.xml.bind.JAXBException;
 import java.awt.event.ActionEvent;
@@ -43,13 +44,14 @@ public class AircraftEditorController {
                     Controller.datenmanagerAircraft.getAircraftListe().add(ao);
                 }
                 ao.setId(ui.getTf_id().getText());
-                ao.setId2(ui.getTf_id2().getText());
+                ao.setId2(ui.getTf_id2().getText().toUpperCase());
                 ao.setName(ui.getTf_namemodell().getText());
-                ao.setOrt(ui.getTf_ort().getText());
+                ao.setOrt(ui.getTf_ort().getText().toUpperCase());
                 ao.setStatus(ui.getTf_status().getText());
                 ao.setPilot(ui.getTf_pilot().getText());
                 try {
                     Persistence.saveAircraft(Controller.datenmanagerAircraft);
+                    checkAirport(ao.getOrt());
                 } catch (JAXBException ex) {
                     ex.printStackTrace();
                 }
@@ -62,5 +64,19 @@ public class AircraftEditorController {
                 ui.setVisible(false);
             }
         });
+    }
+
+    private void checkAirport(String ort) {
+        AirportAO ao = Controller.datenmanagerAirport.getAO(ort);
+        if(ao!=null){
+            return;
+        }
+        // airport nicht gefunden, anlegen!
+        AirportAO airportAO =  new AirportAO();
+        airportAO.setId(UUID.randomUUID().toString());
+        airportAO.setName(ort);
+        airportAO.setLat(0.0);
+        airportAO.setLng(0.0);
+        Controller.datenmanagerAirport.getAirportListe().add(airportAO);
     }
 }
