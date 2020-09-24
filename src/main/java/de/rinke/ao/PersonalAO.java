@@ -2,15 +2,13 @@ package de.rinke.ao;
 
 import de.rinke.rbc.table.annotation.SpaltennameTabelle;
 
-public class AirportAO {
+public class PersonalAO {
     //@SpaltennameTabelle(name = "id", pos = 0)
     private String id;
     @SpaltennameTabelle(name = "Name", pos = 0)
     private String name;
-    @SpaltennameTabelle(name = "lat", pos = 1)
-    private Double lat;
-    @SpaltennameTabelle(name = "lng", pos = 2)
-    private Double lng;
+    @SpaltennameTabelle(name = "ort", pos = 1)
+	private String ort;
 
     public String getId() {
         return id;
@@ -28,19 +26,13 @@ public class AirportAO {
         this.name = name;
     }
 
-    public Double getLat() {
-        return lat;
-    }
+	public String getOrt() {
+		return ort;
+	}
 
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
+	public void setOrt(String ort) {
+		this.ort = ort;
+	}
 
-    public Double getLng() {
-        return lng;
-    }
-
-    public void setLng(Double lng) {
-        this.lng = lng;
-    }
+    
 }

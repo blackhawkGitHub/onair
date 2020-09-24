@@ -64,10 +64,10 @@ public class AirportEditorController {
 				ao.setLng(Double.parseDouble(ui.getTf_lng().getText().replace(",",".")));
 				try {
 					Persistence.saveAirport(Controller.datenmanagerAirport);
+					ui.setVisible(false);
 				} catch (JAXBException ex) {
 					ex.printStackTrace();
 				}
-				ui.setVisible(false);
 			}
 		});
 		ui.getBtnAbbrechen().addActionListener(new ActionListener() {

@@ -52,10 +52,10 @@ public class AircraftEditorController {
                 try {
                     Persistence.saveAircraft(Controller.datenmanagerAircraft);
                     checkAirport(ao.getOrt());
+                    ui.setVisible(false);
                 } catch (JAXBException ex) {
                     ex.printStackTrace();
                 }
-                ui.setVisible(false);
             }
         });
         ui.getBtnAbbrechen().addActionListener(new ActionListener() {

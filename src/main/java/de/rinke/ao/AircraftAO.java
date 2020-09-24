@@ -3,19 +3,19 @@ package de.rinke.ao;
 import de.rinke.rbc.table.annotation.SpaltennameTabelle;
 
 public class AircraftAO {
-	@SpaltennameTabelle(name = "id", pos = 0)
+	//@SpaltennameTabelle(name = "id", pos = 0)
 	private String id;
-	@SpaltennameTabelle(name = "id2", pos = 1)
+	@SpaltennameTabelle(name = "id2", pos = 0)
 	private String id2;
-	@SpaltennameTabelle(name = "name", pos = 2)
+	@SpaltennameTabelle(name = "name", pos = 1)
 	private String name;
-	@SpaltennameTabelle(name = "ort", pos = 3)
+	@SpaltennameTabelle(name = "ort", pos = 2)
 	private String ort;
-	@SpaltennameTabelle(name = "status", pos = 4)
+	@SpaltennameTabelle(name = "status", pos = 3)
 	private String status;
-	@SpaltennameTabelle(name = "pilot", pos = 5)
+	@SpaltennameTabelle(name = "pilot", pos = 4)
 	private String pilot;
-	@SpaltennameTabelle(name = "entf", pos = 6)
+	@SpaltennameTabelle(name = "entf", pos = 5)
 	private String entfernung;
 
 	@Override

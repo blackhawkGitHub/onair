@@ -22,6 +22,9 @@ public class OnAirUI extends JFrame {
 	private JButton btnAirport;
 	private JTable table_airport;
 	private JScrollPane scrollPane_1;
+	private JTable table_personal;
+	private JScrollPane scrollPane_2;
+	private JButton btnPersonal;
 
 	/**
 	 * Create the frame.
@@ -33,16 +36,16 @@ public class OnAirUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPane.columnWidths = new int[] { 0, 0, 0, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 2;
-		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.gridwidth = 3;
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 0;
@@ -50,6 +53,9 @@ public class OnAirUI extends JFrame {
 
 		btnAircraft = new JButton("aircraft");
 		panel.add(btnAircraft);
+		
+		btnPersonal = new JButton("personal");
+		panel.add(btnPersonal);
 
 		btnAirport = new JButton("airport");
 		panel.add(btnAirport);
@@ -68,11 +74,22 @@ public class OnAirUI extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+		scrollPane_2 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
+		gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_2.insets = new Insets(0, 0, 0, 5);
+		gbc_scrollPane_2.gridx = 1;
+		gbc_scrollPane_2.gridy = 1;
+		contentPane.add(scrollPane_2, gbc_scrollPane_2);
+		
+		table_personal = new JTable();
+		scrollPane_2.setViewportView(table_personal);
 
 		scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane_1.gridx = 1;
+		gbc_scrollPane_1.gridx = 2;
 		gbc_scrollPane_1.gridy = 1;
 		contentPane.add(scrollPane_1, gbc_scrollPane_1);
 
@@ -98,5 +115,11 @@ public class OnAirUI extends JFrame {
 
 	public JTable getTable_airport() {
 		return table_airport;
+	}
+	public JTable getTable_personal() {
+		return table_personal;
+	}
+	public JButton getBtnPersonal() {
+		return btnPersonal;
 	}
 }
