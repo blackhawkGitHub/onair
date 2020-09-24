@@ -11,6 +11,7 @@ import de.rinke.ui.PersonalEditorController;
 import rbc.klassen.FileManagerRBC;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import javax.xml.bind.JAXBException;
 import java.awt.event.*;
 import java.io.File;
@@ -24,6 +25,7 @@ public class Controller {
 	public static DatenmanagerAirport datenmanagerAirport = new DatenmanagerAirport();
 	public static DatenmanagerPersonal datenmanagerPersonal = new DatenmanagerPersonal();
 	private OnAirUI ui = new OnAirUI();
+	private Sortmanager sortmanager = new Sortmanager();
 
 	public void init() {
 
@@ -158,6 +160,21 @@ public class Controller {
 					aec.init(null);
 					updateTable();
 				}
+			}
+		});
+
+		this.ui.getTable().getTableHeader().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JTable table = ((JTableHeader) e.getSource()).getTable();
+				int col = table.columnAtPoint(e.getPoint());
+				String name = table.getColumnName(col);
+
+			//	if(col==0){
+					// id2
+					sortmanager.sort(col,datenmanagerAircraft);
+					updateTable();
+			//	}
 			}
 		});
 
